@@ -4,12 +4,6 @@ server:
 spring:
   application:
     name: user-service
-  h2:
-    console:
-      enabled: true
-      settings:
-        web-allow-others: true
-      path: /h2-console
 
   datasource:
       driver-class-name: com.mysql.cj.jdbc.Driver

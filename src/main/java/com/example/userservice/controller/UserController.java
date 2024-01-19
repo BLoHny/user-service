@@ -1,7 +1,9 @@
 package com.example.userservice.controller;
 
 import com.example.userservice.dto.RequestUser;
+import com.example.userservice.dto.ResponseUser;
 import com.example.userservice.dto.UserDto;
+import com.example.userservice.entity.User;
 import com.example.userservice.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -13,8 +15,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
-@RequestMapping("/")
+@RequestMapping("/user-service")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -24,12 +29,12 @@ public class UserController {
     @Value("${greeting.message}")
     private String message;
 
-    @GetMapping("/user-service/health_check")
+    @GetMapping("/health_check")
     public String status() {
         return String.format("It's Working in User Service on PORT %s", env.getProperty("local.server.port"));
     }
 
-    @GetMapping("/user-service/welcome")
+    @GetMapping("/welcome")
     public String welcome() {
         return message;
     }
@@ -41,5 +46,23 @@ public class UserController {
         UserDto userDto = modelMapper.map(user, UserDto.class);
         userService.createUser(userDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/users")
+    public ResponseEntity<List<ResponseUser>> getUsers() {
+        Iterable<User> userList = userService.getUserByAll();
+
+        List<ResponseUser> result = new ArrayList<>();
+        userList.forEach(v -> {
+            result.add(new ModelMapper().map(v, ResponseUser.class));
+        });
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/users/{userId}")
+    public ResponseEntity<ResponseUser> getUser(@PathVariable String userId) {
+        UserDto user = userService.getUserById(userId);
+        return new ResponseEntity<>(new ModelMapper().map(user, ResponseUser.class), HttpStatus.OK);
     }
 }

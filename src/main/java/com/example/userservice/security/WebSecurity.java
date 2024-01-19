@@ -19,8 +19,7 @@ public class WebSecurity {
         http
                 .formLogin().disable();
         http.authorizeHttpRequests()
-                .requestMatchers("/user-service/**").permitAll()
-                .requestMatchers("/users/**").permitAll();
+                .requestMatchers("/user-service/**").permitAll();
 
         return http.build();
     }

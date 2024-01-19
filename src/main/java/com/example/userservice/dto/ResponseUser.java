@@ -1,20 +1,17 @@
 package com.example.userservice.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
-import java.util.Date;
 import java.util.List;
 
 @Data
-public class UserDto {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class ResponseUser {
 
     private String email;
     private String name;
-    private String pwd;
     private String userId;
-    private Date createdAt;
-
-    private String encryptedPwd;
 
     private List<ResponseOrder> orders;
 }

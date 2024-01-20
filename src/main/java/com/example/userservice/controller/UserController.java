@@ -6,7 +6,6 @@ import com.example.userservice.dto.UserDto;
 import com.example.userservice.entity.User;
 import com.example.userservice.service.UserService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,12 +18,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user-service")
-@RequiredArgsConstructor
+@RequestMapping("/")
 public class UserController {
 
     private final Environment env;
     private final UserService userService;
+
+    public UserController(Environment env, UserService userService) {
+        this.env = env;
+        this.userService = userService;
+    }
 
     @Value("${greeting.message}")
     private String message;

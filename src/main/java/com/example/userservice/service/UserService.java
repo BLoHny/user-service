@@ -10,4 +10,6 @@ public interface UserService {
     UserDto getUserById(String userId);
 
     Iterable<User> getUserByAll();
+
+    UserDto getUserDetailsByEmail(String userName);
 }

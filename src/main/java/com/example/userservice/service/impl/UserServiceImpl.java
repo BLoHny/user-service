@@ -75,13 +75,14 @@ public class UserServiceImpl implements UserService {
                         new ParameterizedTypeReference<>() {
                 });*/
 
-        List<ResponseOrder> list = null;
+/*        List<ResponseOrder> list = null;
         try {
             list = client.getOrders(userId);
         } catch (FeignException ex) {
             log.error(ex.getMessage());
-        }
+        }*/
 
+        List<ResponseOrder> list = client.getOrders(userId);
         userDto.setOrders(list);
 
         return userDto;

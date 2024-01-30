@@ -6,7 +6,7 @@ import com.example.userservice.dto.UserDto;
 import com.example.userservice.entity.User;
 import com.example.userservice.repository.UserRepository;
 import com.example.userservice.service.UserService;
-import feign.FeignException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -24,6 +24,7 @@ import java.util.UUID;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -32,22 +33,6 @@ public class UserServiceImpl implements UserService {
     private final Environment env;
     private final OrderServiceClient client;
     private final CircuitBreakerFactory circuitBreakerFactory;
-
-    public UserServiceImpl(
-            UserRepository userRepository,
-            PasswordEncoder passwordEncoder,
-            RestTemplate restTemplate,
-            Environment env,
-            OrderServiceClient client,
-            CircuitBreakerFactory circuitBreakerFactory
-    ) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.restTemplate = restTemplate;
-        this.env = env;
-        this.client = client;
-        this.circuitBreakerFactory = circuitBreakerFactory;
-    }
 
     @Override
     public void createUser(UserDto userDto) {

@@ -5,6 +5,7 @@ import com.example.userservice.dto.ResponseUser;
 import com.example.userservice.dto.UserDto;
 import com.example.userservice.entity.User;
 import com.example.userservice.service.UserService;
+import io.micrometer.core.annotation.Timed;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -32,6 +33,7 @@ public class UserController {
     @Value("${greeting.message}")
     private String message;
 
+    @Timed(value = "users.status", longTask = true)
     @GetMapping("/health_check")
     public String status() {
         return String.format("It's Working in User Service" +

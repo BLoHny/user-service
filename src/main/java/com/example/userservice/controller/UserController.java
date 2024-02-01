@@ -33,8 +33,8 @@ public class UserController {
     @Value("${greeting.message}")
     private String message;
 
-    @Timed(value = "users.status", longTask = true)
     @GetMapping("/health_check")
+    @Timed(value = "users.status", longTask = true)
     public String status() {
         return String.format("It's Working in User Service" +
                 " on port(local.server.port) = " + env.getProperty("local.server.port") +
@@ -45,6 +45,7 @@ public class UserController {
     }
 
     @GetMapping("/welcome")
+    @Timed(value = "users.welcome", longTask = true)
     public String welcome() {
         return message;
     }

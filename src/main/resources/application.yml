@@ -18,7 +18,7 @@ spring:
       type: web
   sleuth:
     sampler:
-      probability: 1
+      probability: 1.0
 
   rabbitmq:
     host: 127.0.0.1
@@ -56,9 +56,16 @@ logging:
 
 management:
   endpoints:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
     web:
       exposure:
         include: refresh, health, beans, busrefresh, info, metrics, prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}
 
 #token:
 #  expiration_time: 86400000
